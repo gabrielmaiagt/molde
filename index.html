@@ -1,0 +1,2844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<script>if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) { var href = document.location.href; if (!href.match(/[?&]nowprocket/)) { if (href.indexOf("?") == -1) { if (href.indexOf("#") == -1) { document.location.href = href + "?nowprocket=1" } else { document.location.href = href.replace("#", "?nowprocket=1#") } } else { if (href.indexOf("#") == -1) { document.location.href = href + "&nowprocket=1" } else { document.location.href = href.replace("#", "&nowprocket=1#") } } } }</script>
+	<script>class RocketLazyLoadScripts { constructor(e) { this.triggerEvents = e, this.eventOptions = { passive: !0 }, this.userEventListener = this.triggerListener.bind(this), this.delayedScripts = { normal: [], async: [], defer: [] }, this.allJQueries = [] } _addUserInteractionListener(e) { this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventListener, e.eventOptions))) } _removeUserInteractionListener(e) { this.triggerEvents.forEach((t => window.removeEventListener(t, e.userEventListener, e.eventOptions))) } triggerListener() { this._removeUserInteractionListener(this), "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", this._loadEverythingNow.bind(this)) : this._loadEverythingNow() } async _loadEverythingNow() { this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async), await this._triggerDOMContentLoaded(), await this._triggerWindowLoad(), window.dispatchEvent(new Event("rocket-allScriptsLoaded")) } _registerAllDelayedScripts() { document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e => { e.hasAttribute("src") ? e.hasAttribute("async") && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute("defer") && !1 !== e.defer || "module" === e.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e) })) } async _transformScript(e) { return await this._requestAnimFrame(), new Promise((t => { const n = document.createElement("script"); let r;[...e.attributes].forEach((e => { let t = e.nodeName; "type" !== t && ("data-rocket-type" === t && (t = "type", r = e.nodeValue), n.setAttribute(t, e.nodeValue)) })), e.hasAttribute("src") ? (n.addEventListener("load", t), n.addEventListener("error", t)) : (n.text = e.text, t()), e.parentNode.replaceChild(n, e) })) } async _loadScriptsFromList(e) { const t = e.shift(); return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve() } _preloadAllScripts() { var e = document.createDocumentFragment();[...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async].forEach((t => { const n = t.getAttribute("src"); if (n) { const t = document.createElement("link"); t.href = n, t.rel = "preload", t.as = "script", e.appendChild(t) } })), document.head.appendChild(e) } _delayEventListeners() { let e = {}; function t(t, n) { !function (t) { function n(n) { return e[t].eventsToRewrite.indexOf(n) >= 0 ? "rocket-" + n : n } e[t] || (e[t] = { originalFunctions: { add: t.addEventListener, remove: t.removeEventListener }, eventsToRewrite: [] }, t.addEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments) }, t.removeEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments) }) }(t), e[t].eventsToRewrite.push(n) } function n(e, t) { let n = e[t]; Object.defineProperty(e, t, { get: () => n || function () { }, set(r) { e["rocket" + t] = n = r } }) } t(document, "DOMContentLoaded"), t(window, "DOMContentLoaded"), t(window, "load"), t(window, "pageshow"), t(document, "readystatechange"), n(document, "onreadystatechange"), n(window, "onload"), n(window, "onpageshow") } _delayJQueryReady(e) { let t = window.jQuery; Object.defineProperty(window, "jQuery", { get: () => t, set(n) { if (n && n.fn && !e.allJQueries.includes(n)) { n.fn.ready = n.fn.init.prototype.ready = function (t) { e.domReadyFired ? t.bind(document)(n) : document.addEventListener("rocket-DOMContentLoaded", (() => t.bind(document)(n))) }; const t = n.fn.on; n.fn.on = n.fn.init.prototype.on = function () { if (this[0] === window) { function e(e) { return e.split(" ").map((e => "load" === e || 0 === e.indexOf("load.") ? "rocket-jquery-load" : e)).join(" ") } "string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => { delete Object.assign(arguments[0], { [e(t)]: arguments[0][t] })[t] })) } return t.apply(this, arguments), this }, e.allJQueries.push(n) } t = n } }) } async _triggerDOMContentLoaded() { this.domReadyFired = !0, await this._requestAnimFrame(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._requestAnimFrame(), window.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._requestAnimFrame(), document.dispatchEvent(new Event("rocket-readystatechange")), await this._requestAnimFrame(), document.rocketonreadystatechange && document.rocketonreadystatechange() } async _triggerWindowLoad() { await this._requestAnimFrame(), window.dispatchEvent(new Event("rocket-load")), await this._requestAnimFrame(), window.rocketonload && window.rocketonload(), await this._requestAnimFrame(), this.allJQueries.forEach((e => e(window).trigger("rocket-jquery-load"))), window.dispatchEvent(new Event("rocket-pageshow")), await this._requestAnimFrame(), window.rocketonpageshow && window.rocketonpageshow() } _handleDocumentWrite() { const e = new Map; document.write = document.writeln = function (t) { const n = document.currentScript, r = document.createRange(), i = n.parentElement; let o = e.get(n); void 0 === o && (o = n.nextSibling, e.set(n, o)); const a = document.createDocumentFragment(); r.setStart(a, 0), a.appendChild(r.createContextualFragment(t)), i.insertBefore(a, o) } } async _requestAnimFrame() { return new Promise((e => requestAnimationFrame(e))) } static run() { const e = new RocketLazyLoadScripts(["keydown", "mousemove", "touchmove", "touchstart", "touchend", "wheel"]); e._addUserInteractionListener(e) } } RocketLazyLoadScripts.run();</script>
+
+	<title>moldes-vestidos  ourfacean.fun</title>
+	<link rel="stylesheet" href="css/c58acc126ddac72a583957d4c1f0de8b.css" media="all" data-minify="1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="max-image-preview:large">
+	<title>moldes-vestidos  ourfacean.fun</title>
+	<link rel="dns-prefetch" href="//maps.googleapis.com">
+	<link rel="dns-prefetch" href="//maps.gstatic.com">
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="dns-prefetch" href="//ajax.googleapis.com">
+	<link rel="dns-prefetch" href="//apis.google.com">
+	<link rel="dns-prefetch" href="//google-analytics.com">
+	<link rel="dns-prefetch" href="//www.google-analytics.com">
+	<link rel="dns-prefetch" href="//ssl.google-analytics.com">
+	<link rel="dns-prefetch" href="//youtube.com">
+	<link rel="dns-prefetch" href="//api.pinterest.com">
+	<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+	<link rel="dns-prefetch" href="//connect.facebook.net">
+	<link rel="dns-prefetch" href="//platform.twitter.com">
+	<link rel="dns-prefetch" href="//syndication.twitter.com">
+	<link rel="dns-prefetch" href="//platform.instagram.com">
+	<link rel="dns-prefetch" href="//disqus.com">
+	<link rel="dns-prefetch" href="//sitename.disqus.com">
+	<link rel="dns-prefetch" href="//s7.addthis.com">
+	<link rel="dns-prefetch" href="//platform.linkedin.com">
+	<link rel="dns-prefetch" href="//w.sharethis.com">
+	<link rel="dns-prefetch" href="//i0.wp.com">
+	<link rel="dns-prefetch" href="//i1.wp.com">
+	<link rel="dns-prefetch" href="//i2.wp.com">
+	<link rel="dns-prefetch" href="//stats.wp.com">
+	<link rel="dns-prefetch" href="//pixel.wp.com">
+	<link rel="dns-prefetch" href="//s.gravatar.com">
+	<link rel="dns-prefetch" href="//0.gravatar.com">
+	<link rel="dns-prefetch" href="//2.gravatar.com">
+	<link rel="dns-prefetch" href="//1.gravatar.com">
+	<link rel="dns-prefetch" href="//www.googletagmanager.com">
+	<link rel="dns-prefetch" href="//googletagmanager.com">
+	<link rel="alternate" type="application/rss+xml" title="Feed para ourfacean.fun �"
+		href="https://ourfacean.fun/feed/">
+	<link rel="alternate" type="application/rss+xml" title="Feed de comentários para ourfacean.fun �"
+		href="https://ourfacean.fun/comments/feed/">
+	<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed"
+		href="https://ourfacean.fun/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fourfacean.fun%2Fmoldes-vestidos%2F">
+	<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed"
+		href="https://ourfacean.fun/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fourfacean.fun%2Fmoldes-vestidos%2F&format=xml">
+	<style id="wp-img-auto-sizes-contain-inline-css">
+		img:is([sizes=auto i], [sizes^="auto," i]) {
+			contain-intrinsic-size: 3000px 1500px
+		}
+
+		/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+	</style>
+	<style id="wp-emoji-styles-inline-css">
+		img.wp-smiley,
+		img.emoji {
+			display: inline !important;
+			border: none !important;
+			box-shadow: none !important;
+			height: 1em !important;
+			width: 1em !important;
+			margin: 0 0.07em !important;
+			vertical-align: -0.1em !important;
+			background: none !important;
+			padding: 0 !important;
+		}
+
+		/*# sourceURL=wp-emoji-styles-inline-css */
+	</style>
+	<style id="wp-block-library-inline-css">
+		:root {
+			--wp-block-synced-color: #7a00df;
+			--wp-block-synced-color--rgb: 122, 0, 223;
+			--wp-bound-block-color: var(--wp-block-synced-color);
+			--wp-editor-canvas-background: #ddd;
+			--wp-admin-theme-color: #007cba;
+			--wp-admin-theme-color--rgb: 0, 124, 186;
+			--wp-admin-theme-color-darker-10: #006ba1;
+			--wp-admin-theme-color-darker-10--rgb: 0, 107, 160.5;
+			--wp-admin-theme-color-darker-20: #005a87;
+			--wp-admin-theme-color-darker-20--rgb: 0, 90, 135;
+			--wp-admin-border-width-focus: 2px
+		}
+
+		@media (min-resolution:192dpi) {
+			:root {
+				--wp-admin-border-width-focus: 1.5px
+			}
+		}
+
+		.wp-element-button {
+			cursor: pointer
+		}
+
+		:root .has-very-light-gray-background-color {
+			background-color: #eee
+		}
+
+		:root .has-very-dark-gray-background-color {
+			background-color: #313131
+		}
+
+		:root .has-very-light-gray-color {
+			color: #eee
+		}
+
+		:root .has-very-dark-gray-color {
+			color: #313131
+		}
+
+		:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background {
+			background: linear-gradient(135deg, #00d084, #0693e3)
+		}
+
+		:root .has-purple-crush-gradient-background {
+			background: linear-gradient(135deg, #34e2e4, #4721fb 50%, #ab1dfe)
+		}
+
+		:root .has-hazy-dawn-gradient-background {
+			background: linear-gradient(135deg, #faaca8, #dad0ec)
+		}
+
+		:root .has-subdued-olive-gradient-background {
+			background: linear-gradient(135deg, #fafae1, #67a671)
+		}
+
+		:root .has-atomic-cream-gradient-background {
+			background: linear-gradient(135deg, #fdd79a, #004a59)
+		}
+
+		:root .has-nightshade-gradient-background {
+			background: linear-gradient(135deg, #330968, #31cdcf)
+		}
+
+		:root .has-midnight-gradient-background {
+			background: linear-gradient(135deg, #020381, #2874fc)
+		}
+
+		:root {
+			--wp--preset--font-size--normal: 16px;
+			--wp--preset--font-size--huge: 42px
+		}
+
+		.has-regular-font-size {
+			font-size: 1em
+		}
+
+		.has-larger-font-size {
+			font-size: 2.625em
+		}
+
+		.has-normal-font-size {
+			font-size: var(--wp--preset--font-size--normal)
+		}
+
+		.has-huge-font-size {
+			font-size: var(--wp--preset--font-size--huge)
+		}
+
+		.has-text-align-center {
+			text-align: center
+		}
+
+		.has-text-align-left {
+			text-align: left
+		}
+
+		.has-text-align-right {
+			text-align: right
+		}
+
+		.has-fit-text {
+			white-space: nowrap !important
+		}
+
+		#end-resizable-editor-section {
+			display: none
+		}
+
+		.aligncenter {
+			clear: both
+		}
+
+		.items-justified-left {
+			justify-content: flex-start
+		}
+
+		.items-justified-center {
+			justify-content: center
+		}
+
+		.items-justified-right {
+			justify-content: flex-end
+		}
+
+		.items-justified-space-between {
+			justify-content: space-between
+		}
+
+		.screen-reader-text {
+			border: 0;
+			clip-path: inset(50%);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+			word-wrap: normal !important
+		}
+
+		.screen-reader-text:focus {
+			background-color: #ddd;
+			clip-path: none;
+			color: #444;
+			display: block;
+			font-size: 1em;
+			height: auto;
+			left: 5px;
+			line-height: normal;
+			padding: 15px 23px 14px;
+			text-decoration: none;
+			top: 5px;
+			width: auto;
+			z-index: 100000
+		}
+
+		html :where(.has-border-color) {
+			border-style: solid
+		}
+
+		html :where([style*=border-top-color]) {
+			border-top-style: solid
+		}
+
+		html :where([style*=border-right-color]) {
+			border-right-style: solid
+		}
+
+		html :where([style*=border-bottom-color]) {
+			border-bottom-style: solid
+		}
+
+		html :where([style*=border-left-color]) {
+			border-left-style: solid
+		}
+
+		html :where([style*=border-width]) {
+			border-style: solid
+		}
+
+		html :where([style*=border-top-width]) {
+			border-top-style: solid
+		}
+
+		html :where([style*=border-right-width]) {
+			border-right-style: solid
+		}
+
+		html :where([style*=border-bottom-width]) {
+			border-bottom-style: solid
+		}
+
+		html :where([style*=border-left-width]) {
+			border-left-style: solid
+		}
+
+		html :where(img[class*=wp-image-]) {
+			height: auto;
+			max-width: 100%
+		}
+
+		:where(figure) {
+			margin: 0 0 1em
+		}
+
+		html :where(.is-position-sticky) {
+			--wp-admin--admin-bar--position-offset: var(--wp-admin--admin-bar--height, 0px)
+		}
+
+		@media screen and (max-width:600px) {
+			html :where(.is-position-sticky) {
+				--wp-admin--admin-bar--position-offset: 0px
+			}
+		}
+
+		/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+	</style>
+	<style id="global-styles-inline-css">
+		:root {
+			--wp--preset--aspect-ratio--square: 1;
+			--wp--preset--aspect-ratio--4-3: 4/3;
+			--wp--preset--aspect-ratio--3-4: 3/4;
+			--wp--preset--aspect-ratio--3-2: 3/2;
+			--wp--preset--aspect-ratio--2-3: 2/3;
+			--wp--preset--aspect-ratio--16-9: 16/9;
+			--wp--preset--aspect-ratio--9-16: 9/16;
+			--wp--preset--color--black: #000000;
+			--wp--preset--color--cyan-bluish-gray: #abb8c3;
+			--wp--preset--color--white: #ffffff;
+			--wp--preset--color--pale-pink: #f78da7;
+			--wp--preset--color--vivid-red: #cf2e2e;
+			--wp--preset--color--luminous-vivid-orange: #ff6900;
+			--wp--preset--color--luminous-vivid-amber: #fcb900;
+			--wp--preset--color--light-green-cyan: #7bdcb5;
+			--wp--preset--color--vivid-green-cyan: #00d084;
+			--wp--preset--color--pale-cyan-blue: #8ed1fc;
+			--wp--preset--color--vivid-cyan-blue: #0693e3;
+			--wp--preset--color--vivid-purple: #9b51e0;
+			--wp--preset--color--base: #FFFFFF;
+			--wp--preset--color--contrast: #111111;
+			--wp--preset--color--accent-1: #FFEE58;
+			--wp--preset--color--accent-2: #F6CFF4;
+			--wp--preset--color--accent-3: #503AA8;
+			--wp--preset--color--accent-4: #686868;
+			--wp--preset--color--accent-5: #FBFAF3;
+			--wp--preset--color--accent-6: color-mix(in srgb, currentColor 20%, transparent);
+			--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgb(6, 147, 227) 0%, rgb(155, 81, 224) 100%);
+			--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+			--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgb(252, 185, 0) 0%, rgb(255, 105, 0) 100%);
+			--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgb(255, 105, 0) 0%, rgb(207, 46, 46) 100%);
+			--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+			--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+			--wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+			--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+			--wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+			--wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+			--wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+			--wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+			--wp--preset--font-size--small: 0.875rem;
+			--wp--preset--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.196), 1.125rem);
+			--wp--preset--font-size--large: clamp(1.125rem, 1.125rem + ((1vw - 0.2rem) * 0.392), 1.375rem);
+			--wp--preset--font-size--x-large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 0.392), 2rem);
+			--wp--preset--font-size--xx-large: clamp(2.15rem, 2.15rem + ((1vw - 0.2rem) * 1.333), 3rem);
+			--wp--preset--font-family--manrope: Manrope, sans-serif;
+			--wp--preset--font-family--fira-code: "Fira Code", monospace;
+			--wp--preset--spacing--20: 10px;
+			--wp--preset--spacing--30: 20px;
+			--wp--preset--spacing--40: 30px;
+			--wp--preset--spacing--50: clamp(30px, 5vw, 50px);
+			--wp--preset--spacing--60: clamp(30px, 7vw, 70px);
+			--wp--preset--spacing--70: clamp(50px, 7vw, 90px);
+			--wp--preset--spacing--80: clamp(70px, 10vw, 140px);
+			--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+			--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+			--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+			--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);
+			--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);
+		}
+
+		:root {
+			--wp--style--global--content-size: 645px;
+			--wp--style--global--wide-size: 1340px;
+		}
+
+		:where(body) {
+			margin: 0;
+		}
+
+		.wp-site-blocks {
+			padding-top: var(--wp--style--root--padding-top);
+			padding-bottom: var(--wp--style--root--padding-bottom);
+		}
+
+		.has-global-padding {
+			padding-right: var(--wp--style--root--padding-right);
+			padding-left: var(--wp--style--root--padding-left);
+		}
+
+		.has-global-padding>.alignfull {
+			margin-right: calc(var(--wp--style--root--padding-right) * -1);
+			margin-left: calc(var(--wp--style--root--padding-left) * -1);
+		}
+
+		.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) {
+			padding-right: 0;
+			padding-left: 0;
+		}
+
+		.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull))>.alignfull {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.wp-site-blocks>.alignleft {
+			float: left;
+			margin-right: 2em;
+		}
+
+		.wp-site-blocks>.alignright {
+			float: right;
+			margin-left: 2em;
+		}
+
+		.wp-site-blocks>.aligncenter {
+			justify-content: center;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		:where(.wp-site-blocks)>* {
+			margin-block-start: 1.2rem;
+			margin-block-end: 0;
+		}
+
+		:where(.wp-site-blocks)> :first-child {
+			margin-block-start: 0;
+		}
+
+		:where(.wp-site-blocks)> :last-child {
+			margin-block-end: 0;
+		}
+
+		:root {
+			--wp--style--block-gap: 1.2rem;
+		}
+
+		:root :where(.is-layout-flow)> :first-child {
+			margin-block-start: 0;
+		}
+
+		:root :where(.is-layout-flow)> :last-child {
+			margin-block-end: 0;
+		}
+
+		:root :where(.is-layout-flow)>* {
+			margin-block-start: 1.2rem;
+			margin-block-end: 0;
+		}
+
+		:root :where(.is-layout-constrained)> :first-child {
+			margin-block-start: 0;
+		}
+
+		:root :where(.is-layout-constrained)> :last-child {
+			margin-block-end: 0;
+		}
+
+		:root :where(.is-layout-constrained)>* {
+			margin-block-start: 1.2rem;
+			margin-block-end: 0;
+		}
+
+		:root :where(.is-layout-flex) {
+			gap: 1.2rem;
+		}
+
+		:root :where(.is-layout-grid) {
+			gap: 1.2rem;
+		}
+
+		.is-layout-flow>.alignleft {
+			float: left;
+			margin-inline-start: 0;
+			margin-inline-end: 2em;
+		}
+
+		.is-layout-flow>.alignright {
+			float: right;
+			margin-inline-start: 2em;
+			margin-inline-end: 0;
+		}
+
+		.is-layout-flow>.aligncenter {
+			margin-left: auto !important;
+			margin-right: auto !important;
+		}
+
+		.is-layout-constrained>.alignleft {
+			float: left;
+			margin-inline-start: 0;
+			margin-inline-end: 2em;
+		}
+
+		.is-layout-constrained>.alignright {
+			float: right;
+			margin-inline-start: 2em;
+			margin-inline-end: 0;
+		}
+
+		.is-layout-constrained>.aligncenter {
+			margin-left: auto !important;
+			margin-right: auto !important;
+		}
+
+		.is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+			max-width: var(--wp--style--global--content-size);
+			margin-left: auto !important;
+			margin-right: auto !important;
+		}
+
+		.is-layout-constrained>.alignwide {
+			max-width: var(--wp--style--global--wide-size);
+		}
+
+		body .is-layout-flex {
+			display: flex;
+		}
+
+		.is-layout-flex {
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		.is-layout-flex> :is(*, div) {
+			margin: 0;
+		}
+
+		body .is-layout-grid {
+			display: grid;
+		}
+
+		.is-layout-grid> :is(*, div) {
+			margin: 0;
+		}
+
+		body {
+			background-color: var(--wp--preset--color--base);
+			color: var(--wp--preset--color--contrast);
+			font-family: var(--wp--preset--font-family--manrope);
+			font-size: var(--wp--preset--font-size--large);
+			font-weight: 300;
+			letter-spacing: -0.1px;
+			line-height: 1.4;
+			--wp--style--root--padding-top: 0px;
+			--wp--style--root--padding-right: var(--wp--preset--spacing--50);
+			--wp--style--root--padding-bottom: 0px;
+			--wp--style--root--padding-left: var(--wp--preset--spacing--50);
+		}
+
+		a:where(:not(.wp-element-button)) {
+			color: currentColor;
+			text-decoration: underline;
+		}
+
+		:root :where(a:where(:not(.wp-element-button)):hover) {
+			text-decoration: none;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: 400;
+			letter-spacing: -0.1px;
+			line-height: 1.125;
+		}
+
+		h1 {
+			font-size: var(--wp--preset--font-size--xx-large);
+		}
+
+		h2 {
+			font-size: var(--wp--preset--font-size--x-large);
+		}
+
+		h3 {
+			font-size: var(--wp--preset--font-size--large);
+		}
+
+		h4 {
+			font-size: var(--wp--preset--font-size--medium);
+		}
+
+		h5 {
+			font-size: var(--wp--preset--font-size--small);
+			letter-spacing: 0.5px;
+		}
+
+		h6 {
+			font-size: var(--wp--preset--font-size--small);
+			font-weight: 700;
+			letter-spacing: 1.4px;
+			text-transform: uppercase;
+		}
+
+		:root :where(.wp-element-button, .wp-block-button__link) {
+			background-color: var(--wp--preset--color--contrast);
+			border-width: 0;
+			color: var(--wp--preset--color--base);
+			font-family: inherit;
+			font-size: var(--wp--preset--font-size--medium);
+			font-style: inherit;
+			font-weight: inherit;
+			letter-spacing: inherit;
+			line-height: inherit;
+			padding-top: 1rem;
+			padding-right: 2.25rem;
+			padding-bottom: 1rem;
+			padding-left: 2.25rem;
+			text-decoration: none;
+			text-transform: inherit;
+		}
+
+		:root :where(.wp-element-button:hover, .wp-block-button__link:hover) {
+			background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+			border-color: transparent;
+			color: var(--wp--preset--color--base);
+		}
+
+		:root :where(.wp-element-button:focus, .wp-block-button__link:focus) {
+			outline-color: var(--wp--preset--color--accent-4);
+			outline-offset: 2px;
+		}
+
+		:root :where(.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption) {
+			font-size: var(--wp--preset--font-size--small);
+			line-height: 1.4;
+		}
+
+		.has-black-color {
+			color: var(--wp--preset--color--black) !important;
+		}
+
+		.has-cyan-bluish-gray-color {
+			color: var(--wp--preset--color--cyan-bluish-gray) !important;
+		}
+
+		.has-white-color {
+			color: var(--wp--preset--color--white) !important;
+		}
+
+		.has-pale-pink-color {
+			color: var(--wp--preset--color--pale-pink) !important;
+		}
+
+		.has-vivid-red-color {
+			color: var(--wp--preset--color--vivid-red) !important;
+		}
+
+		.has-luminous-vivid-orange-color {
+			color: var(--wp--preset--color--luminous-vivid-orange) !important;
+		}
+
+		.has-luminous-vivid-amber-color {
+			color: var(--wp--preset--color--luminous-vivid-amber) !important;
+		}
+
+		.has-light-green-cyan-color {
+			color: var(--wp--preset--color--light-green-cyan) !important;
+		}
+
+		.has-vivid-green-cyan-color {
+			color: var(--wp--preset--color--vivid-green-cyan) !important;
+		}
+
+		.has-pale-cyan-blue-color {
+			color: var(--wp--preset--color--pale-cyan-blue) !important;
+		}
+
+		.has-vivid-cyan-blue-color {
+			color: var(--wp--preset--color--vivid-cyan-blue) !important;
+		}
+
+		.has-vivid-purple-color {
+			color: var(--wp--preset--color--vivid-purple) !important;
+		}
+
+		.has-base-color {
+			color: var(--wp--preset--color--base) !important;
+		}
+
+		.has-contrast-color {
+			color: var(--wp--preset--color--contrast) !important;
+		}
+
+		.has-accent-1-color {
+			color: var(--wp--preset--color--accent-1) !important;
+		}
+
+		.has-accent-2-color {
+			color: var(--wp--preset--color--accent-2) !important;
+		}
+
+		.has-accent-3-color {
+			color: var(--wp--preset--color--accent-3) !important;
+		}
+
+		.has-accent-4-color {
+			color: var(--wp--preset--color--accent-4) !important;
+		}
+
+		.has-accent-5-color {
+			color: var(--wp--preset--color--accent-5) !important;
+		}
+
+		.has-accent-6-color {
+			color: var(--wp--preset--color--accent-6) !important;
+		}
+
+		.has-black-background-color {
+			background-color: var(--wp--preset--color--black) !important;
+		}
+
+		.has-cyan-bluish-gray-background-color {
+			background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+		}
+
+		.has-white-background-color {
+			background-color: var(--wp--preset--color--white) !important;
+		}
+
+		.has-pale-pink-background-color {
+			background-color: var(--wp--preset--color--pale-pink) !important;
+		}
+
+		.has-vivid-red-background-color {
+			background-color: var(--wp--preset--color--vivid-red) !important;
+		}
+
+		.has-luminous-vivid-orange-background-color {
+			background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+		}
+
+		.has-luminous-vivid-amber-background-color {
+			background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+		}
+
+		.has-light-green-cyan-background-color {
+			background-color: var(--wp--preset--color--light-green-cyan) !important;
+		}
+
+		.has-vivid-green-cyan-background-color {
+			background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+		}
+
+		.has-pale-cyan-blue-background-color {
+			background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+		}
+
+		.has-vivid-cyan-blue-background-color {
+			background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+		}
+
+		.has-vivid-purple-background-color {
+			background-color: var(--wp--preset--color--vivid-purple) !important;
+		}
+
+		.has-base-background-color {
+			background-color: var(--wp--preset--color--base) !important;
+		}
+
+		.has-contrast-background-color {
+			background-color: var(--wp--preset--color--contrast) !important;
+		}
+
+		.has-accent-1-background-color {
+			background-color: var(--wp--preset--color--accent-1) !important;
+		}
+
+		.has-accent-2-background-color {
+			background-color: var(--wp--preset--color--accent-2) !important;
+		}
+
+		.has-accent-3-background-color {
+			background-color: var(--wp--preset--color--accent-3) !important;
+		}
+
+		.has-accent-4-background-color {
+			background-color: var(--wp--preset--color--accent-4) !important;
+		}
+
+		.has-accent-5-background-color {
+			background-color: var(--wp--preset--color--accent-5) !important;
+		}
+
+		.has-accent-6-background-color {
+			background-color: var(--wp--preset--color--accent-6) !important;
+		}
+
+		.has-black-border-color {
+			border-color: var(--wp--preset--color--black) !important;
+		}
+
+		.has-cyan-bluish-gray-border-color {
+			border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+		}
+
+		.has-white-border-color {
+			border-color: var(--wp--preset--color--white) !important;
+		}
+
+		.has-pale-pink-border-color {
+			border-color: var(--wp--preset--color--pale-pink) !important;
+		}
+
+		.has-vivid-red-border-color {
+			border-color: var(--wp--preset--color--vivid-red) !important;
+		}
+
+		.has-luminous-vivid-orange-border-color {
+			border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+		}
+
+		.has-luminous-vivid-amber-border-color {
+			border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+		}
+
+		.has-light-green-cyan-border-color {
+			border-color: var(--wp--preset--color--light-green-cyan) !important;
+		}
+
+		.has-vivid-green-cyan-border-color {
+			border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+		}
+
+		.has-pale-cyan-blue-border-color {
+			border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+		}
+
+		.has-vivid-cyan-blue-border-color {
+			border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+		}
+
+		.has-vivid-purple-border-color {
+			border-color: var(--wp--preset--color--vivid-purple) !important;
+		}
+
+		.has-base-border-color {
+			border-color: var(--wp--preset--color--base) !important;
+		}
+
+		.has-contrast-border-color {
+			border-color: var(--wp--preset--color--contrast) !important;
+		}
+
+		.has-accent-1-border-color {
+			border-color: var(--wp--preset--color--accent-1) !important;
+		}
+
+		.has-accent-2-border-color {
+			border-color: var(--wp--preset--color--accent-2) !important;
+		}
+
+		.has-accent-3-border-color {
+			border-color: var(--wp--preset--color--accent-3) !important;
+		}
+
+		.has-accent-4-border-color {
+			border-color: var(--wp--preset--color--accent-4) !important;
+		}
+
+		.has-accent-5-border-color {
+			border-color: var(--wp--preset--color--accent-5) !important;
+		}
+
+		.has-accent-6-border-color {
+			border-color: var(--wp--preset--color--accent-6) !important;
+		}
+
+		.has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+			background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+		}
+
+		.has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+			background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+		}
+
+		.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+			background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+		}
+
+		.has-luminous-vivid-orange-to-vivid-red-gradient-background {
+			background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+		}
+
+		.has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+			background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+		}
+
+		.has-cool-to-warm-spectrum-gradient-background {
+			background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+		}
+
+		.has-blush-light-purple-gradient-background {
+			background: var(--wp--preset--gradient--blush-light-purple) !important;
+		}
+
+		.has-blush-bordeaux-gradient-background {
+			background: var(--wp--preset--gradient--blush-bordeaux) !important;
+		}
+
+		.has-luminous-dusk-gradient-background {
+			background: var(--wp--preset--gradient--luminous-dusk) !important;
+		}
+
+		.has-pale-ocean-gradient-background {
+			background: var(--wp--preset--gradient--pale-ocean) !important;
+		}
+
+		.has-electric-grass-gradient-background {
+			background: var(--wp--preset--gradient--electric-grass) !important;
+		}
+
+		.has-midnight-gradient-background {
+			background: var(--wp--preset--gradient--midnight) !important;
+		}
+
+		.has-small-font-size {
+			font-size: var(--wp--preset--font-size--small) !important;
+		}
+
+		.has-medium-font-size {
+			font-size: var(--wp--preset--font-size--medium) !important;
+		}
+
+		.has-large-font-size {
+			font-size: var(--wp--preset--font-size--large) !important;
+		}
+
+		.has-x-large-font-size {
+			font-size: var(--wp--preset--font-size--x-large) !important;
+		}
+
+		.has-xx-large-font-size {
+			font-size: var(--wp--preset--font-size--xx-large) !important;
+		}
+
+		.has-manrope-font-family {
+			font-family: var(--wp--preset--font-family--manrope) !important;
+		}
+
+		.has-fira-code-font-family {
+			font-family: var(--wp--preset--font-family--fira-code) !important;
+		}
+
+		/*# sourceURL=global-styles-inline-css */
+	</style>
+	<style id="wp-block-template-skip-link-inline-css">
+		.skip-link.screen-reader-text {
+			border: 0;
+			clip-path: inset(50%);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute !important;
+			width: 1px;
+			word-wrap: normal !important;
+		}
+
+		.skip-link.screen-reader-text:focus {
+			background-color: #eee;
+			clip-path: none;
+			color: #444;
+			display: block;
+			font-size: 1em;
+			height: auto;
+			left: 5px;
+			line-height: normal;
+			padding: 15px 23px 14px;
+			text-decoration: none;
+			top: 5px;
+			width: auto;
+			z-index: 100000;
+		}
+
+		/*# sourceURL=wp-block-template-skip-link-inline-css */
+	</style>
+	<style id="twentytwentyfive-style-inline-css">
+		a {
+			text-decoration-thickness: 1px !important;
+			text-underline-offset: .1em
+		}
+
+		:where(.wp-site-blocks :focus) {
+			outline-style: solid;
+			outline-width: 2px
+		}
+
+		.wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child) {
+			margin-bottom: 3px
+		}
+
+		.wp-block-navigation .wp-block-navigation-item .wp-block-navigation-item__content {
+			outline-offset: 4px
+		}
+
+		.wp-block-navigation .wp-block-navigation-item ul.wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+			outline-offset: 0
+		}
+
+		blockquote,
+		caption,
+		figcaption,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			text-wrap: pretty
+		}
+
+		.more-link {
+			display: block
+		}
+
+		:where(pre) {
+			overflow-x: auto
+		}
+
+		/*# sourceURL=https://ourfacean.fun/wp-content/themes/twentytwentyfive/style.min.css */
+	</style>
+
+
+
+
+
+
+
+
+
+
+
+	<style id="rocket-lazyload-inline-css">
+		.rll-youtube-player {
+			position: relative;
+			padding-bottom: 56.23%;
+			height: 0;
+			overflow: hidden;
+			max-width: 100%;
+		}
+
+		.rll-youtube-player:focus-within {
+			outline: 2px solid currentColor;
+			outline-offset: 5px;
+		}
+
+		.rll-youtube-player iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 100;
+			background: 0 0
+		}
+
+		.rll-youtube-player img {
+			bottom: 0;
+			display: block;
+			left: 0;
+			margin: auto;
+			max-width: 100%;
+			width: 100%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			border: none;
+			height: auto;
+			-webkit-transition: .4s all;
+			-moz-transition: .4s all;
+			transition: .4s all
+		}
+
+		.rll-youtube-player img:hover {
+			-webkit-filter: brightness(75%)
+		}
+
+		.rll-youtube-player .play {
+			height: 100%;
+			width: 100%;
+			left: 0;
+			top: 0;
+			position: absolute;
+			background: url(images/youtube.png) no-repeat center;
+			background-color: transparent !important;
+			cursor: pointer;
+			border: none;
+		}
+
+		.wp-embed-responsive .wp-has-aspect-ratio .rll-youtube-player {
+			position: absolute;
+			padding-bottom: 0;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0
+		}
+
+		/*# sourceURL=rocket-lazyload-inline-css */
+	</style>
+	<link rel="stylesheet" id="elementor-gf-roboto-css"
+		href="https://fonts.googleapis.com/css?family=Roboto:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap"
+		media="all">
+	<link rel="stylesheet" id="elementor-gf-robotoslab-css"
+		href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap"
+		media="all">
+	<link rel="stylesheet" id="elementor-gf-poppins-css"
+		href="https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap"
+		media="all">
+	<link rel="stylesheet" id="elementor-gf-montserrat-css"
+		href="https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap"
+		media="all">
+	<link rel="stylesheet" id="elementor-gf-opensans-css"
+		href="https://fonts.googleapis.com/css?family=Open+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap"
+		media="all">
+	<script type="rocketlazyloadscript" src="js/jquery.min.js" id="jquery-core-js" defer=""></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/jquery-migrate.min.js" id="jquery-migrate-js"></script>
+	<link rel="https://api.w.org/" href="https://ourfacean.fun/wp-json/">
+	<link rel="alternate" title="JSON" type="application/json" href="https://ourfacean.fun/wp-json/wp/v2/pages/5522">
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://ourfacean.fun/xmlrpc.php?rsd">
+	<link rel="canonical" href="https://ourfacean.fun/moldes-vestidos/">
+	<meta name="generator"
+		content="Elementor 3.34.1; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
+	<style>
+		.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
+		.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+			background-image: none !important;
+		}
+
+		@media screen and (max-height: 1024px) {
+
+			.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
+			.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+				background-image: none !important;
+			}
+		}
+
+		@media screen and (max-height: 640px) {
+
+			.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
+			.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+				background-image: none !important;
+			}
+		}
+	</style>
+	<style class="wp-fonts-local">
+		@font-face {
+			font-family: Manrope;
+			font-style: normal;
+			font-weight: 200 800;
+			font-display: fallback;
+			src: url('fonts/Manrope-VariableFont_wght.woff2') format('woff2');
+		}
+
+		@font-face {
+			font-family: "Fira Code";
+			font-style: normal;
+			font-weight: 300 700;
+			font-display: fallback;
+			src: url('fonts/FiraCode-VariableFont_wght.woff2') format('woff2');
+		}
+	</style>
+	<link rel="icon" href="images/1736133356-150x150.webp" sizes="32x32">
+	<link rel="icon" href="images/1736133356-300x300.webp" sizes="192x192">
+	<link rel="apple-touch-icon" href="images/1736133356-300x300.webp">
+	<meta name="msapplication-TileImage"
+		content="https://ourfacean.fun/wp-content/uploads/2025/04/1736133356-300x300.webp">
+	<noscript>
+		<style id="rocket-lazyload-nojs-css">
+			.rll-youtube-player,
+			[data-lazy-src] {
+				display: none !important;
+			}
+		</style>
+	</noscript>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<script>
+		window.pixelId = "6969aa713ff3689e935b1e6b";
+		var a = document.createElement("script");
+		a.setAttribute("async", "");
+		a.setAttribute("defer", "");
+		a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+		document.head.appendChild(a);
+	</script>
+	<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck
+		data-utmify-prevent-subids async defer></script>
+	<style>
+		.upgrade-modal-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.7);
+			z-index: 9999;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.upgrade-modal {
+			background: white;
+			width: 90%;
+			max-width: 500px;
+			border-radius: 10px;
+			padding: 20px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			position: relative;
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		}
+
+		.upgrade-header {
+			background: #ff4757;
+			color: white;
+			padding: 10px;
+			border-radius: 10px 10px 0 0;
+			margin: -20px -20px 20px -20px;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+
+		.upgrade-subhead {
+			color: #ff4757;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		.upgrade-price-old {
+			text-decoration: line-through;
+			color: #7f8c8d;
+			font-size: 0.9em;
+		}
+
+		.upgrade-price-new {
+			color: #2ecc71;
+			font-size: 1.5em;
+			font-weight: bold;
+			margin: 10px 0;
+		}
+
+		.upgrade-title {
+			font-weight: bold;
+			margin-bottom: 10px;
+			font-size: 1.1em;
+			color: #333;
+		}
+
+		.upgrade-features {
+			text-align: left;
+			margin: 15px 0;
+			font-size: 0.9em;
+			line-height: 1.6;
+			padding: 0;
+		}
+
+		.upgrade-features li {
+			list-style: none;
+			border-bottom: 1px solid #eee;
+			padding: 5px 0;
+		}
+
+		.upgrade-features li:before {
+			content: "✔";
+			color: #2ecc71;
+			margin-right: 5px;
+		}
+
+		.btn-upgrade {
+			display: block;
+			width: 100%;
+			padding: 15px;
+			background: #2ecc71;
+			color: white;
+			text-decoration: none;
+			font-weight: bold;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			font-size: 1.1em;
+			border: none;
+			cursor: pointer;
+			transition: background 0.3s;
+		}
+
+		.btn-upgrade:hover {
+			background: #27ae60;
+		}
+
+		.btn-basic {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			background: transparent;
+			color: #95a5a6;
+			text-decoration: underline;
+			border: none;
+			cursor: pointer;
+			font-size: 0.9em;
+		}
+	</style>
+</head>
+
+<body data-rsssl="1"
+	class="wp-singular page-template-default page page-id-5522 wp-embed-responsive wp-theme-twentytwentyfive elementor-default elementor-template-canvas elementor-kit-9 elementor-page elementor-page-5522">
+	<div data-elementor-type="wp-page" data-elementor-id="5522" class="elementor elementor-5522"
+		data-elementor-post-type="page">
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-18ecb097 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="18ecb097" data-element_type="section" data-settings="{"
+			background_background":"classic","shape_divider_bottom":"tilt"}"="">
+			<div class="elementor-background-overlay"></div>
+			<div class="elementor-shape elementor-shape-bottom" aria-hidden="true" data-negative="false">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+					<path class="elementor-shape-fill" d="M0,6V0h1000v100L0,6z"></path>
+				</svg>
+			</div>
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3d641bc8"
+					data-id="3d641bc8" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-6b7adaa3 elementor-widget elementor-widget-html"
+							data-id="6b7adaa3" data-element_type="widget" data-widget_type="html.default">
+							<div class="elementor-widget-container">
+
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-1d0c1b88 elementor-widget elementor-widget-html"
+							data-id="1d0c1b88" data-element_type="widget" data-widget_type="html.default">
+							<div class="elementor-widget-container">
+
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-3c06a070 elementor-widget elementor-widget-heading"
+							data-id="3c06a070" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Descubra como faturar até 3
+									mil por mês costurando e vendendo vestidos Incríveis
+								</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-3bde021e elementor-widget elementor-widget-heading"
+							data-id="3bde021e" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">+90 Moldes de Vestidos
+								</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-6c568363 elementor-widget elementor-widget-heading"
+							data-id="6c568363" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Moldes Prontos com todas as
+									medidas, basta você recortar e costurar por apenas R$5,99
+								</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-77317a56 elementor-widget elementor-widget-image"
+							data-id="77317a56" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img width="340" height="266" src="images/new-dress.png" title="New Dress"
+									alt="New Dress Image">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-1a7046c7 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="1a7046c7" data-element_type="section">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-708b04c5"
+					data-id="708b04c5" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-1d18ea9d elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="1d18ea9d" data-element_type="widget" data-settings="{"
+							highlighted_text":"r$5,99","headline_style":"highlight","marker":"circle","loop":"yes","highlight_animation_duration":1200,"highlight_iteration_delay":8000}"
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-plain-text elementor-headline-text-wrapper">Por
+										apenas</span>
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">R$5,99</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-72ff362e elementor-align-center elementor-widget elementor-widget-button"
+							data-id="72ff362e" data-element_type="widget" data-widget_type="button.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-button-wrapper">
+									<a class="elementor-button elementor-button-link elementor-size-sm" href="#buton">
+										<span class="elementor-button-content-wrapper">
+											<span class="elementor-button-text">QUERO ESSA SUPER OFERTA</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-65d70513 elementor-widget elementor-widget-image"
+							data-id="65d70513" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img decoding="async" width="500" height="82"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%2082'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-2659" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp 500w, https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura-300x49.webp 300w"
+									data-lazy-sizes="(max-width: 500px) 100vw, 500px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp"><noscript><img
+										decoding="async" width="500" height="82"
+										src="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp"
+										class="attachment-large size-large wp-image-2659" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp 500w, https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura-300x49.webp 300w"
+										sizes="(max-width: 500px) 100vw, 500px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-5d40e39 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="5d40e39" data-element_type="section" data-settings="{" background_background":"gradient"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-15eae04d"
+					data-id="15eae04d" data-element_type="column" id="buton">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-115f8878 elementor-widget elementor-widget-heading"
+							data-id="115f8878" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">UM POUCO DO QUE VOCÊ TERÁ
+									ACESSO...</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-652fb64f elementor-widget elementor-widget-image"
+							data-id="652fb64f" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img width="289" height="289" decoding="async"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20289%20289'%3E%3C/svg%3E"
+									title="Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e"
+									alt="Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e" loading="lazy"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e-rh6nxqmjkxt6hunax6uejr46rirg7uubnfsdyyf91m.webp"><noscript><img
+										width="289" height="289" decoding="async"
+										src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e-rh6nxqmjkxt6hunax6uejr46rirg7uubnfsdyyf91m.webp"
+										title="Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e"
+										alt="Moldes-Premium-12-rh2lbnbvbki1fxdb9pezhnszh1sy196nbb6tg4aw7e"
+										loading="lazy" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-fbc5fde elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+							data-id="fbc5fde" data-element_type="widget" data-widget_type="icon-list.default">
+							<div class="elementor-widget-container">
+								<ul class="elementor-icon-list-items">
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes para vestidos curtos, midi,
+											longos, sociais, casuais, etc...</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Tamanhos: P/M/G</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Basta imprimir em qualquer impressora
+											doméstica</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes já Testados, Ajustados e
+											Aprovados</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>E MUITO MAIS...</b></span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-2a714c63 elementor-align-center elementor-widget elementor-widget-button"
+							data-id="2a714c63" data-element_type="widget" data-widget_type="button.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-button-wrapper">
+									<a class="elementor-button elementor-button-link elementor-size-sm" href="#buton2">
+										<span class="elementor-button-content-wrapper">
+											<span class="elementor-button-text">QUERO ESSA SUPER OFERTA</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-6bee5dbe elementor-widget elementor-widget-image"
+							data-id="6bee5dbe" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img decoding="async" width="500" height="82"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%2082'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-2659" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp 500w, https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura-300x49.webp 300w"
+									data-lazy-sizes="(max-width: 500px) 100vw, 500px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp"><noscript><img
+										decoding="async" width="500" height="82"
+										src="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp"
+										class="attachment-large size-large wp-image-2659" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura.webp 500w, https://ourfacean.fun/wp-content/uploads/2025/09/compra-segura-300x49.webp 300w"
+										sizes="(max-width: 500px) 100vw, 500px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-7159a4dd elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="7159a4dd" data-element_type="section" data-settings="{" background_background":"gradient"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a29a0db"
+					data-id="5a29a0db" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-55362f31 elementor-widget elementor-widget-spacer"
+							data-id="55362f31" data-element_type="widget" data-widget_type="spacer.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-spacer">
+									<div class="elementor-spacer-inner"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-78258e83 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="78258e83" data-element_type="section" data-settings="{" background_background":"gradient"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-fd4e496"
+					data-id="fd4e496" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-2d1221e2 elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="2d1221e2" data-element_type="widget" data-settings="{"
+							highlighted_text":"b\u00d4nus=""
+							incr\u00cdveis","marker":"underline_zigzag","highlight_iteration_delay":3000,"headline_style":"highlight","loop":"yes","highlight_animation_duration":1200}"=""
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">BÔNUS
+											INCRÍVEIS</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-33ad9c2a elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="33ad9c2a" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-48df802a"
+					data-id="48df802a" data-element_type="column" data-settings="{"
+					background_background":"classic"}"="">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-2ce8577a elementor-widget elementor-widget-heading"
+							data-id="2ce8577a" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">+30 Moldes de Brinde</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-68d85c28 elementor-widget elementor-widget-image"
+							data-id="68d85c28" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img width="259" height="154" decoding="async"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20259%20154'%3E%3C/svg%3E"
+									title="babados-2.jpg" alt="babados-2.jpg" loading="lazy"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/babados-2-rh5xby0x870b7a8oe4jiqnwb0az1f7x9t3ikink3b8.jpg"><noscript><img
+										width="259" height="154" decoding="async"
+										src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/babados-2-rh5xby0x870b7a8oe4jiqnwb0az1f7x9t3ikink3b8.jpg"
+										title="babados-2.jpg" alt="babados-2.jpg" loading="lazy" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-37d9d97e elementor-widget elementor-widget-text-editor"
+							data-id="37d9d97e" data-element_type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p>Ganhe <b>+30 moldes de brinde</b> para criar vestidos infantis incríveis: fáceis de
+									usar, adaptáveis e inspiradores.</p>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-1cab1a34 elementor-widget elementor-widget-heading"
+							data-id="1cab1a34" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">DE <s>R$297,00</s></h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-71dc08a0 elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="71dc08a0" data-element_type="widget" data-settings="{"
+							highlighted_text":"gr\u00c1tis","headline_style":"highlight","marker":"circle","loop":"yes","highlight_animation_duration":1200,"highlight_iteration_delay":8000}"=""
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">GRÁTIS</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-28fb6109"
+					data-id="28fb6109" data-element_type="column" data-settings="{"
+					background_background":"classic"}"="">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-7caecc14 elementor-widget elementor-widget-heading"
+							data-id="7caecc14" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Os Melhores Tecidos</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-1d43159 elementor-widget elementor-widget-image"
+							data-id="1d43159" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img width="259" height="154" decoding="async"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20259%20154'%3E%3C/svg%3E"
+									title="diferentes-tipos-de-tecido-para-sublimacao.webp"
+									alt="diferentes-tipos-de-tecido-para-sublimacao.webp" loading="lazy"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/diferentes-tipos-de-tecido-para-sublimacao-rh5xby0x870b7a8oe4jiqnwb0az1f7x9t3ikink3b8.webp"><noscript><img
+										width="259" height="154" decoding="async"
+										src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/diferentes-tipos-de-tecido-para-sublimacao-rh5xby0x870b7a8oe4jiqnwb0az1f7x9t3ikink3b8.webp"
+										title="diferentes-tipos-de-tecido-para-sublimacao.webp"
+										alt="diferentes-tipos-de-tecido-para-sublimacao.webp"
+										loading="lazy" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-5f70d5f5 elementor-widget elementor-widget-text-editor"
+							data-id="5f70d5f5" data-element_type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p>Descubra <b>os melhores tecidos para vestidos:</b> toque suave, estampas encantadoras
+									e durabilidade ideal para conforto e alegria dos seus clientes.</p>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-5efc2695 elementor-widget elementor-widget-heading"
+							data-id="5efc2695" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">DE <s>R$177,00</s></h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-2909887e elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="2909887e" data-element_type="widget" data-settings="{"
+							highlighted_text":"gr\u00c1tis","headline_style":"highlight","marker":"circle","loop":"yes","highlight_animation_duration":1200,"highlight_iteration_delay":8000}"=""
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">GRÁTIS</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-77213887 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="77213887" data-element_type="section" data-settings="{" background_background":"gradient"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3ada52be"
+					data-id="3ada52be" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-31e3e65f elementor-widget elementor-widget-heading"
+							data-id="31e3e65f" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">PARA QUEM É ESSE MATERIAL?
+								</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-1af7d95a elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="1af7d95a" data-element_type="section">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5efd3461"
+					data-id="5efd3461" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-23d309d6 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+							data-id="23d309d6" data-element_type="widget" data-widget_type="icon-list.default">
+							<div class="elementor-widget-container">
+								<ul class="elementor-icon-list-items">
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-circle-down"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>Para quem ama costurar com
+												propósito</b> – Descubra +90 moldes de vestidos fáceis e práticos para
+											criar peças incríveis.</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-circle-down"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>Para quem busca praticidade</b> –
+											Modelos simples, com passo a passo descomplicado, perfeitos para iniciantes
+											e experientes.</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-circle-down"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>Para quem deseja exclusividade </b>–
+											Moldes variados e modernos para produzir vestidos únicos e cheios de
+											estilo.</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-far-hand-point-right"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M428.8 137.6h-86.177a115.52 115.52 0 0 0 2.176-22.4c0-47.914-35.072-83.2-92-83.2-45.314 0-57.002 48.537-75.707 78.784-7.735 12.413-16.994 23.317-25.851 33.253l-.131.146-.129.148C135.662 161.807 127.764 168 120.8 168h-2.679c-5.747-4.952-13.536-8-22.12-8H32c-17.673 0-32 12.894-32 28.8v230.4C0 435.106 14.327 448 32 448h64c8.584 0 16.373-3.048 22.12-8h2.679c28.688 0 67.137 40 127.2 40h21.299c62.542 0 98.8-38.658 99.94-91.145 12.482-17.813 18.491-40.785 15.985-62.791A93.148 93.148 0 0 0 393.152 304H428.8c45.435 0 83.2-37.584 83.2-83.2 0-45.099-38.101-83.2-83.2-83.2zm0 118.4h-91.026c12.837 14.669 14.415 42.825-4.95 61.05 11.227 19.646 1.687 45.624-12.925 53.625 6.524 39.128-10.076 61.325-50.6 61.325H248c-45.491 0-77.21-35.913-120-39.676V215.571c25.239-2.964 42.966-21.222 59.075-39.596 11.275-12.65 21.725-25.3 30.799-39.875C232.355 112.712 244.006 80 252.8 80c23.375 0 44 8.8 44 35.2 0 35.2-26.4 53.075-26.4 70.4h158.4c18.425 0 35.2 16.5 35.2 35.2 0 18.975-16.225 35.2-35.2 35.2zM88 384c0 13.255-10.745 24-24 24s-24-10.745-24-24 10.745-24 24-24 24 10.745 24 24z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>E MUITO MAIS...</b></span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-26e926e3 elementor-widget elementor-widget-heading"
+							data-id="26e926e3" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Este material prova que é
+									possível criar vestidos encantadores e cheios de personalidade sem complicação. São
+									+90 moldes completos, peças variadas e ideias inspiradoras. Aproveite o valor
+									promocional e comece hoje mesmo!<br><br>Chega de perder tempo buscando moldes
+									isolados. Aqui você terá um padrão completo, com detalhes especiais e modelagens que
+									encantam.<br><br>Com este material, você poderá costurar vestidos para uso próprio,
+									presentear ou até mesmo vender e lucrar.<br><br>Tudo isso investindo apenas R$ 5,99
+								</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-53384c39 elementor-widget elementor-widget-spacer"
+							data-id="53384c39" data-element_type="widget" data-widget_type="spacer.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-spacer">
+									<div class="elementor-spacer-inner"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-23a3c3a8 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="23a3c3a8" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-background-overlay"></div>
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-50ad5b7"
+					data-id="50ad5b7" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-12e8d142 elementor-widget elementor-widget-heading"
+							data-id="12e8d142" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Como Funciona?</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-55a22773 elementor-widget elementor-widget-image"
+							data-id="55a22773" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img fetchpriority="high" decoding="async" width="512" height="512"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4137" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email.webp 512w, https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email-150x150.webp 150w"
+									data-lazy-sizes="(max-width: 512px) 100vw, 512px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email.webp"><noscript><img
+										fetchpriority="high" decoding="async" width="512" height="512"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email.webp"
+										class="attachment-large size-large wp-image-4137" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email.webp 512w, https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2025/11/marketing-de-email-150x150.webp 150w"
+										sizes="(max-width: 512px) 100vw, 512px" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-58806809 elementor-widget elementor-widget-heading"
+							data-id="58806809" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Chega no e-mail</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-21203259 elementor-widget elementor-widget-heading"
+							data-id="21203259" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Os Moldes são todos <b>100%
+										em PDF</b>, após o pagamento você recebe imediatamente o link de acesso no seu
+									e-mail e tem acesso vitalício e atualizações.</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-6e4e8b7 elementor-widget elementor-widget-image"
+							data-id="6e4e8b7" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="500" height="500"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%20500'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-5351" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1.webp 500w, https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1-150x150.webp 150w"
+									data-lazy-sizes="(max-width: 500px) 100vw, 500px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1.webp"><noscript><img
+										loading="lazy" decoding="async" width="500" height="500"
+										src="https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1.webp"
+										class="attachment-large size-large wp-image-5351" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1.webp 500w, https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2026/01/pngtree-pink-printer-icon-png-image_12436767-removebg-preview-1-150x150.webp 150w"
+										sizes="(max-width: 500px) 100vw, 500px" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-5fa36886 elementor-widget elementor-widget-heading"
+							data-id="5fa36886" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Você imprime</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-7e096592 elementor-widget elementor-widget-heading"
+							data-id="7e096592" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">O material é todo dividido em
+									módulos temáticas. Assim você pode<b> imprimir quantas vezes quiser </b>e como
+									desejar na sua casa.</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-2c3ba481 elementor-widget elementor-widget-image"
+							data-id="2c3ba481" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="360" height="286"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20286'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-5352" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview.webp 360w, https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview-300x238.webp 300w"
+									data-lazy-sizes="(max-width: 360px) 100vw, 360px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview.webp"><noscript><img
+										loading="lazy" decoding="async" width="360" height="286"
+										src="https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview.webp"
+										class="attachment-large size-large wp-image-5352" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview.webp 360w, https://ourfacean.fun/wp-content/uploads/2026/01/png-transparent-sewing-quilting-needlework-dressmaker-others-sewing-notions-quilting-thumbnail-removebg-preview-300x238.webp 300w"
+										sizes="(max-width: 360px) 100vw, 360px" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-5caa754 elementor-widget elementor-widget-heading"
+							data-id="5caa754" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Hora de Costurar e Faturar!
+								</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-68c91a2e elementor-widget elementor-widget-heading"
+							data-id="68c91a2e" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Hora de costurar e<b> faturar
+										muito</b> com Vestidos Infantis para crianças Cristãs!</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-b30e121 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="b30e121" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-7350b8e4"
+					data-id="7350b8e4" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-767c6de3 elementor-widget elementor-widget-heading"
+							data-id="767c6de3" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Veja o que estão falando!​
+								</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-59f2fddd elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="59f2fddd" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-77c75da5"
+					data-id="77c75da5" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-7be6f6e elementor-widget elementor-widget-image"
+							data-id="7be6f6e" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="1024" height="260"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20260'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4140" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf-768x195.png 768w"
+									data-lazy-sizes="(max-width: 1024px) 100vw, 1024px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf.png"><noscript><img
+										loading="lazy" decoding="async" width="1024" height="260"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf.png"
+										class="attachment-large size-large wp-image-4140" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/mqev1dcf-768x195.png 768w"
+										sizes="(max-width: 1024px) 100vw, 1024px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5d600c12"
+					data-id="5d600c12" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-1b309026 elementor-widget elementor-widget-image"
+							data-id="1b309026" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="1024" height="260"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20260'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4141" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc-768x195.png 768w"
+									data-lazy-sizes="(max-width: 1024px) 100vw, 1024px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc.png"><noscript><img
+										loading="lazy" decoding="async" width="1024" height="260"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc.png"
+										class="attachment-large size-large wp-image-4141" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/mlt2pwhc-768x195.png 768w"
+										sizes="(max-width: 1024px) 100vw, 1024px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-dd079e3 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="dd079e3" data-element_type="section" data-settings="{" background_background":"gradient"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-68a2aef3"
+					data-id="68a2aef3" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-60a1e2cf elementor-widget elementor-widget-image"
+							data-id="60a1e2cf" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="1024" height="260"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20260'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4142" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg-768x195.png 768w"
+									data-lazy-sizes="(max-width: 1024px) 100vw, 1024px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg.png"><noscript><img
+										loading="lazy" decoding="async" width="1024" height="260"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg.png"
+										class="attachment-large size-large wp-image-4142" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/s741ujxqg-768x195.png 768w"
+										sizes="(max-width: 1024px) 100vw, 1024px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-3e2fe3c7"
+					data-id="3e2fe3c7" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-3fe21736 elementor-widget elementor-widget-image"
+							data-id="3fe21736" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="1024" height="260"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20260'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4143" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga-768x195.png 768w"
+									data-lazy-sizes="(max-width: 1024px) 100vw, 1024px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga.png"><noscript><img
+										loading="lazy" decoding="async" width="1024" height="260"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga.png"
+										class="attachment-large size-large wp-image-4143" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga.png 1024w, https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga-300x76.png 300w, https://ourfacean.fun/wp-content/uploads/2025/11/g8v1mdfga-768x195.png 768w"
+										sizes="(max-width: 1024px) 100vw, 1024px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-3a571f5f elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="3a571f5f" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-2dad747b"
+					data-id="2dad747b" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-10121bec elementor-widget elementor-widget-image"
+							data-id="10121bec" data-element_type="widget" data-settings="{"
+							_animation_mobile":"zoomin"}"="" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img width="251" height="251" decoding="async"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20251%20251'%3E%3C/svg%3E"
+									title="GARANTIA-7-DIAS.webp" alt="GARANTIA-7-DIAS.webp" loading="lazy"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/GARANTIA-7-DIAS-rbwr1pj4vr5gtj1k9t348e73oqhu58eftigqv8ixla.webp"><noscript><img
+										width="251" height="251" decoding="async"
+										src="https://ourfacean.fun/wp-content/uploads/elementor/thumbs/GARANTIA-7-DIAS-rbwr1pj4vr5gtj1k9t348e73oqhu58eftigqv8ixla.webp"
+										title="GARANTIA-7-DIAS.webp" alt="GARANTIA-7-DIAS.webp"
+										loading="lazy" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-524ecd52"
+					data-id="524ecd52" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-15e01883 elementor-widget elementor-widget-heading"
+							data-id="15e01883" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Teste por 7 dias!</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-26f53a21 elementor-widget__width-initial elementor-widget elementor-widget-heading"
+							data-id="26f53a21" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Queremos garantir ao máximo a
+									sua satisfação, por isso liberamos 7 dias para você decidir se vale a pena para você
+									ou não.<br><br>Caso decida que não, basta entrar em contato conosco, dentro de 7
+									dias, que devolveremos 100% do seu dinheiro</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-506215bf elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="506215bf" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-6c3d136c"
+					data-id="6c3d136c" data-element_type="column" id="buton2">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-70dc8d86 elementor-widget elementor-widget-heading"
+							data-id="70dc8d86" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Escolha a melhor Oferta para
+									você!</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-426d3eac elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="426d3eac" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-311d3183"
+					data-id="311d3183" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-2aca7407 elementor-widget elementor-widget-heading"
+							data-id="2aca7407" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">PLANO BÁSICO</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-29a462f5 elementor-align-start elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+							data-id="29a462f5" data-element_type="widget" data-widget_type="icon-list.default">
+							<div class="elementor-widget-container">
+								<ul class="elementor-icon-list-items">
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text"><b>+20 Moldes de Vestidos</b></span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Bônus Exclusivos</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-17415f9d elementor-widget elementor-widget-heading"
+							data-id="17415f9d" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">R$5,99</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-2c549ab6 elementor-align-center elementor-widget elementor-widget-button"
+							data-id="2c549ab6" data-element_type="widget" data-widget_type="button.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-button-wrapper">
+									<a class="elementor-button elementor-button-link elementor-size-sm"
+										href="javascript:void(0)" onclick="openUpgradePopup(event)">
+										<span class="elementor-button-content-wrapper">
+											<span class="elementor-button-text">LIBERAR OFERTA BÁSICA</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-6b0b3b55 elementor-widget elementor-widget-heading"
+							data-id="6b0b3b55" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Mas antes de
+									comprar...<br><br>temos uma oferta <b>AINDA MAIS vantajosa</b> para você! Veja logo
+									abaixo <span class="mpj7bzys xzlurrtv"><img decoding="async" role="img"
+											class="emoji" alt="⬇️"
+											src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+											data-lazy-src="https://s.w.org/images/core/emoji/14.0.0/svg/2b07.svg"><noscript><img
+												decoding="async" role="img" class="emoji" alt="⬇️"
+												src="https://s.w.org/images/core/emoji/14.0.0/svg/2b07.svg"></noscript></span>
+								</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-3c696e5e elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="3c696e5e" data-element_type="section" id="pitch" data-settings="{"
+			background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-4d3e1350"
+					data-id="4d3e1350" data-element_type="column" data-settings="{"
+					background_background":"classic"}"="">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-background-overlay"></div>
+						<div class="elementor-element elementor-element-6ec596b elementor-widget elementor-widget-heading"
+							data-id="6ec596b" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">PLANO PREMIUM</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-21e46324 elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="21e46324" data-element_type="widget" data-settings="{"
+							highlighted_text":"\ud83c\udfc6n\u00b01="" em=""
+							vendas","marker":"double_underline","headline_style":"highlight","loop":"yes","highlight_animation_duration":1200,"highlight_iteration_delay":8000}"=""
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">🏆N°1
+											em vendas</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-1150759e elementor-widget elementor-widget-image"
+							data-id="1150759e" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="1080" height="1080"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%201080'%3E%3C/svg%3E"
+									class="attachment-full size-full wp-image-5542" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13.webp 1080w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-1024x1024.webp 1024w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-150x150.webp 150w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-768x768.webp 768w"
+									data-lazy-sizes="(max-width: 1080px) 100vw, 1080px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13.webp"><noscript><img
+										loading="lazy" decoding="async" width="1080" height="1080"
+										src="https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13.webp"
+										class="attachment-full size-full wp-image-5542" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13.webp 1080w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-300x300.webp 300w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-1024x1024.webp 1024w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-150x150.webp 150w, https://ourfacean.fun/wp-content/uploads/2026/01/Moldes-Premium-13-768x768.webp 768w"
+										sizes="(max-width: 1080px) 100vw, 1080px" /></noscript>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-3089468d elementor-widget elementor-widget-heading"
+							data-id="3089468d" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">DE <s>R$149,90</s></h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-706272bd elementor-widget elementor-widget-heading"
+							data-id="706272bd" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default"><b>POR APENAS</b></h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-36ab3df2 elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline"
+							data-id="36ab3df2" data-element_type="widget" data-settings="{"
+							highlighted_text":"r$13,99","headline_style":"highlight","marker":"circle","loop":"yes","highlight_animation_duration":1200,"highlight_iteration_delay":8000}"=""
+							data-widget_type="animated-headline.default">
+							<div class="elementor-widget-container">
+								<h3 class="elementor-headline">
+									<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+										<span
+											class="elementor-headline-dynamic-text elementor-headline-text-active">R$13,99</span>
+									</span>
+								</h3>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-60b0e1a1 elementor-align-start elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+							data-id="60b0e1a1" data-element_type="widget" data-widget_type="icon-list.default">
+							<div class="elementor-widget-container">
+								<ul class="elementor-icon-list-items">
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">+90 Moldes para vestidos curtos, midi,
+											longos, sociais, casuais, etc...</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Video aula de como Imprimir os
+											Moldes</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes de Saia Jeans, Social,
+											Evasê</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestidos Básico</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido Alcinha</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido em Malha</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido Cruzado</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido Mãe e Filha</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido Trapézio</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Moldes Vestido Plus Size</span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-circle"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">E <b>muitos outros</b></span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-gift"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M32 448c0 17.7 14.3 32 32 32h160V320H32v128zm256 32h160c17.7 0 32-14.3 32-32V320H288v160zm192-320h-42.1c6.2-12.1 10.1-25.5 10.1-40 0-48.5-39.5-88-88-88-41.6 0-68.5 21.3-103 68.3-34.5-47-61.4-68.3-103-68.3-48.5 0-88 39.5-88 88 0 14.5 3.8 27.9 10.1 40H32c-17.7 0-32 14.3-32 32v80c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-80c0-17.7-14.3-32-32-32zm-326.1 0c-22.1 0-40-17.9-40-40s17.9-40 40-40c19.9 0 34.6 3.3 86.1 80h-86.1zm206.1 0h-86.1c51.4-76.5 65.7-80 86.1-80 22.1 0 40 17.9 40 40s-17.9 40-40 40z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Área de Membros <b>Premium</b></span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-check-double"
+												viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">7 Dias de <b>Garantia</b></span>
+									</li>
+									<li class="elementor-icon-list-item">
+										<span class="elementor-icon-list-icon">
+											<svg aria-hidden="true" class="e-font-icon-svg e-fas-infinity"
+												viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M471.1 96C405 96 353.3 137.3 320 174.6 286.7 137.3 235 96 168.9 96 75.8 96 0 167.8 0 256s75.8 160 168.9 160c66.1 0 117.8-41.3 151.1-78.6 33.3 37.3 85 78.6 151.1 78.6 93.1 0 168.9-71.8 168.9-160S564.2 96 471.1 96zM168.9 320c-40.2 0-72.9-28.7-72.9-64s32.7-64 72.9-64c38.2 0 73.4 36.1 94 64-20.4 27.6-55.9 64-94 64zm302.2 0c-38.2 0-73.4-36.1-94-64 20.4-27.6 55.9-64 94-64 40.2 0 72.9 28.7 72.9 64s-32.7 64-72.9 64z">
+												</path>
+											</svg> </span>
+										<span class="elementor-icon-list-text">Acesso <b>vitalício</b></span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-333ce579 elementor-align-center elementor-mobile-align-center elementor-widget elementor-widget-button"
+							data-id="333ce579" data-element_type="widget" data-widget_type="button.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-button-wrapper">
+									<a class="elementor-button elementor-button-link elementor-size-sm"
+										href="https://grupo-educa-abc.mycartpanda.com/checkout/205404160:1">
+										<span class="elementor-button-content-wrapper">
+											<span class="elementor-button-icon">
+												<svg aria-hidden="true" class="e-font-icon-svg e-far-hand-pointer"
+													viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+													<path
+														d="M358.182 179.361c-19.493-24.768-52.679-31.945-79.872-19.098-15.127-15.687-36.182-22.487-56.595-19.629V67c0-36.944-29.736-67-66.286-67S89.143 30.056 89.143 67v161.129c-19.909-7.41-43.272-5.094-62.083 8.872-29.355 21.795-35.793 63.333-14.55 93.152l109.699 154.001C134.632 501.59 154.741 512 176 512h178.286c30.802 0 57.574-21.5 64.557-51.797l27.429-118.999A67.873 67.873 0 0 0 448 326v-84c0-46.844-46.625-79.273-89.818-62.639zM80.985 279.697l27.126 38.079c8.995 12.626 29.031 6.287 29.031-9.283V67c0-25.12 36.571-25.16 36.571 0v175c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16v-35c0-25.12 36.571-25.16 36.571 0v35c0 8.836 7.163 16 16 16H272c8.837 0 16-7.164 16-16v-21c0-25.12 36.571-25.16 36.571 0v21c0 8.836 7.163 16 16 16h6.857c8.837 0 16-7.164 16-16 0-25.121 36.571-25.16 36.571 0v84c0 1.488-.169 2.977-.502 4.423l-27.43 119.001c-1.978 8.582-9.29 14.576-17.782 14.576H176c-5.769 0-11.263-2.878-14.697-7.697l-109.712-154c-14.406-20.223 14.994-42.818 29.394-22.606zM176.143 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.733 0-14-7.163-14-16zm75.428 0v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16zM327 400v-96c0-8.837 6.268-16 14-16h6c7.732 0 14 7.163 14 16v96c0 8.837-6.268 16-14 16h-6c-7.732 0-14-7.163-14-16z">
+													</path>
+												</svg> </span>
+											<span class="elementor-button-text">Quero essa Super Oferta!</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-151383f4 elementor-widget elementor-widget-image"
+							data-id="151383f4" data-element_type="widget" data-widget_type="image.default">
+							<div class="elementor-widget-container">
+								<img loading="lazy" decoding="async" width="506" height="33"
+									src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20506%2033'%3E%3C/svg%3E"
+									class="attachment-large size-large wp-image-4145" alt=""
+									data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart.png 506w, https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart-300x20.png 300w"
+									data-lazy-sizes="(max-width: 506px) 100vw, 506px"
+									data-lazy-src="https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart.png"><noscript><img
+										loading="lazy" decoding="async" width="506" height="33"
+										src="https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart.png"
+										class="attachment-large size-large wp-image-4145" alt=""
+										srcset="https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart.png 506w, https://ourfacean.fun/wp-content/uploads/2025/11/atividade-de-interpretacao-de-texto-5-ano-6-ano-7-ano-9-ano-interprete-o-texto-fundamental-2-hotmart-300x20.png 300w"
+										sizes="(max-width: 506px) 100vw, 506px" /></noscript>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="elementor-element elementor-element-7d1612ef e-flex e-con-boxed e-con e-parent" data-id="7d1612ef"
+			data-element_type="container">
+			<div class="e-con-inner">
+				<div class="elementor-element elementor-element-5fe98327 elementor-widget elementor-widget-image"
+					data-id="5fe98327" data-element_type="widget" data-widget_type="image.default">
+					<div class="elementor-widget-container">
+						<img loading="lazy" decoding="async" width="1080" height="1350"
+							src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%201350'%3E%3C/svg%3E"
+							class="attachment-full size-full wp-image-5354" alt=""
+							data-lazy-srcset="https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira.webp 1080w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-240x300.webp 240w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-819x1024.webp 819w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-768x960.webp 768w"
+							data-lazy-sizes="(max-width: 1080px) 100vw, 1080px"
+							data-lazy-src="https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira.webp"><noscript><img
+								loading="lazy" decoding="async" width="1080" height="1350"
+								src="https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira.webp"
+								class="attachment-full size-full wp-image-5354" alt=""
+								srcset="https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira.webp 1080w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-240x300.webp 240w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-819x1024.webp 819w, https://ourfacean.fun/wp-content/uploads/2026/01/costureira-pilotista-piloteira-768x960.webp 768w"
+								sizes="(max-width: 1080px) 100vw, 1080px" /></noscript>
+					</div>
+				</div>
+				<div class="elementor-element elementor-element-1d342068 elementor-widget elementor-widget-heading"
+					data-id="1d342068" data-element_type="widget" data-widget_type="heading.default">
+					<div class="elementor-widget-container">
+						<h2 class="elementor-heading-title elementor-size-default">Quem sou eu?</h2>
+					</div>
+				</div>
+				<div class="elementor-element elementor-element-12cb9f24 elementor-widget__width-initial elementor-widget elementor-widget-heading"
+					data-id="12cb9f24" data-element_type="widget" data-widget_type="heading.default">
+					<div class="elementor-widget-container">
+						<h2 class="elementor-heading-title elementor-size-default">Muito prazer!! Meu nome é Luiza
+							Martins, sou apaixonada por costura e venho me dedicando há anos à criação de vestidos
+							incríveis!<br><br>Atualmente desenvolvo peças únicas, modernas e confortáveis, sempre
+							pensando no bem-estar das clientes e na praticidade para quem costura.<br><br>Sempre recebo
+							elogios pelas minhas criações e, depois de muito estudo e prática, resolvi reunir este
+							material para ajudar outras pessoas que também amam costurar, mas que muitas vezes têm
+							dificuldade em encontrar moldes prontos e de qualidade.<br><br>Minha missão é facilitar a
+							vida de quem deseja costurar, oferecendo moldes práticos, econômicos e com um acabamento
+							impecável.<br><br>Já ajudei mais de 600 alunas a criarem peças encantadoras — muitas delas
+							transformaram a costura em uma fonte de renda extra. Agora, este material está disponível
+							para você por um valor simbólico! Espero que aproveite bastante e depois me conte o que
+							achou.<br><br>Nos vemos do outro lado <3< /h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-3a9b1030 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="3a9b1030" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1a02819d"
+					data-id="1a02819d" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-2b813860 elementor-widget elementor-widget-heading"
+							data-id="2b813860" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">Perguntas Frequentes</h2>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-6f4c46f2 elementor-widget elementor-widget-heading"
+							data-id="6f4c46f2" data-element_type="widget" data-widget_type="heading.default">
+							<div class="elementor-widget-container">
+								<h2 class="elementor-heading-title elementor-size-default">F.A.Q.</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-6228578c elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="6228578c" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-51d9fa5c"
+					data-id="51d9fa5c" data-element_type="column" data-settings="{"
+					background_background":"classic"}"="">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-2d4d0a4a elementor-widget elementor-widget-toggle"
+							data-id="2d4d0a4a" data-element_type="widget" data-widget_type="toggle.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-toggle">
+									<div class="elementor-toggle-item">
+										<div id="elementor-tab-title-7601" class="elementor-tab-title" data-tab="1"
+											role="button" aria-controls="elementor-tab-content-7601"
+											aria-expanded="false">
+											<span class="elementor-toggle-icon elementor-toggle-icon-left"
+												aria-hidden="true">
+												<span class="elementor-toggle-icon-closed"><svg
+														class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
+														xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
+														</path>
+													</svg></span>
+												<span class="elementor-toggle-icon-opened"><svg
+														class="elementor-toggle-icon-opened e-font-icon-svg e-fas-caret-up"
+														viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z">
+														</path>
+													</svg></span>
+											</span>
+											<a class="elementor-toggle-title" tabindex="0">Como irei receber meu
+												acesso?</a>
+										</div>
+
+										<div id="elementor-tab-content-7601"
+											class="elementor-tab-content elementor-clearfix" data-tab="1" role="region"
+											aria-labelledby="elementor-tab-title-7601">
+											<p>Assim que você realizar a compra, você receberá no seu e-mail o link de
+												acesso. Basta criar a sua senha e entrar na plataforma.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-7aba71fd elementor-widget elementor-widget-toggle"
+							data-id="7aba71fd" data-element_type="widget" data-widget_type="toggle.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-toggle">
+									<div class="elementor-toggle-item">
+										<div id="elementor-tab-title-2051" class="elementor-tab-title" data-tab="1"
+											role="button" aria-controls="elementor-tab-content-2051"
+											aria-expanded="false">
+											<span class="elementor-toggle-icon elementor-toggle-icon-left"
+												aria-hidden="true">
+												<span class="elementor-toggle-icon-closed"><svg
+														class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
+														xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
+														</path>
+													</svg></span>
+												<span class="elementor-toggle-icon-opened"><svg
+														class="elementor-toggle-icon-opened e-font-icon-svg e-fas-caret-up"
+														viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z">
+														</path>
+													</svg></span>
+											</span>
+											<a class="elementor-toggle-title" tabindex="0">Por quanto tempo terei
+												acesso?</a>
+										</div>
+
+										<div id="elementor-tab-content-2051"
+											class="elementor-tab-content elementor-clearfix" data-tab="1" role="region"
+											aria-labelledby="elementor-tab-title-2051">
+											<p>Ambos os planos possuem acesso vitalício.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="elementor-element elementor-element-627be404 elementor-widget elementor-widget-toggle"
+							data-id="627be404" data-element_type="widget" data-widget_type="toggle.default">
+							<div class="elementor-widget-container">
+								<div class="elementor-toggle">
+									<div class="elementor-toggle-item">
+										<div id="elementor-tab-title-1651" class="elementor-tab-title" data-tab="1"
+											role="button" aria-controls="elementor-tab-content-1651"
+											aria-expanded="false">
+											<span class="elementor-toggle-icon elementor-toggle-icon-left"
+												aria-hidden="true">
+												<span class="elementor-toggle-icon-closed"><svg
+														class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
+														xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
+														</path>
+													</svg></span>
+												<span class="elementor-toggle-icon-opened"><svg
+														class="elementor-toggle-icon-opened e-font-icon-svg e-fas-caret-up"
+														viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z">
+														</path>
+													</svg></span>
+											</span>
+											<a class="elementor-toggle-title" tabindex="0">O pagamento é seguro?</a>
+										</div>
+
+										<div id="elementor-tab-content-1651"
+											class="elementor-tab-content elementor-clearfix" data-tab="1" role="region"
+											aria-labelledby="elementor-tab-title-1651">
+											<p>Sim, é 100% seguro. O <b>Mercado Pago</b> é uma das maiores empresas de
+												pagamentos e hospedagens de produtos online do Brasil.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="elementor-element elementor-element-5bb8adb5 e-flex e-con-boxed e-con e-parent" data-id="5bb8adb5"
+			data-element_type="container" data-settings="{" background_background":"classic"}"="">
+			<div class="e-con-inner">
+				<div class="elementor-element elementor-element-43d8bc61 elementor-align-center elementor-mobile-align-center elementor-widget elementor-widget-button"
+					data-id="43d8bc61" data-element_type="widget" data-widget_type="button.default">
+					<div class="elementor-widget-container">
+						<div class="elementor-button-wrapper">
+							<a class="elementor-button elementor-button-link elementor-size-sm" href="#pitch">
+								<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Comprar agora</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section
+			class="elementor-section elementor-top-section elementor-element elementor-element-3f26886f elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+			data-id="3f26886f" data-element_type="section" data-settings="{" background_background":"classic"}"="">
+			<div class="elementor-container elementor-column-gap-default">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5468c8a3"
+					data-id="5468c8a3" data-element_type="column">
+					<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-54238cef elementor-widget elementor-widget-text-editor"
+							data-id="54238cef" data-element_type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<div id="op3-element-KQTYN8mw" class="op3-element " data-op3-uuid="KQTYN8mw"
+									data-op3-gid="" data-op3-element-type="column" data-op3-element-spec=""
+									data-op3-element-caption="Column #KQTYN8mw" data-op3-code-before=""
+									data-op3-code-after="" data-op-visibility-hidden="0" data-op-element-hidden="0"
+									data-op3-style-id="" data-op3-has-children="1">
+									<div class="op3-column-content op3-background-parent" data-op-animation-trigger=""
+										data-op-animation-style="" data-op-animation-loop="" data-op-timer-minutes=""
+										data-op-timer-seconds="">
+										<div data-op3-element-container="">
+											<div data-op3-children="1">
+												<div id="op3-element-SDWQVRIg" class="op3-element "
+													data-op3-uuid="SDWQVRIg" data-op3-gid=""
+													data-op3-element-type="text" data-op3-element-spec=""
+													data-op3-element-caption="Text Editor #SDWQVRIg"
+													data-op3-code-before="" data-op3-code-after=""
+													data-op-visibility-hidden="0" data-op-element-hidden="0"
+													data-op3-style-id="" data-op3-has-children="0">
+													<div class="op3-text-wrapper" data-op-animation-trigger=""
+														data-op-animation-style="" data-op-animation-loop=""
+														data-op-timer-minutes="" data-op-timer-seconds="">
+														<div data-op3-contenteditable="">
+															<p style="text-align: center;"><span
+																	style="color: #ffffff;">Política de Privacidade |
+																	Termos de Uso</span></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/twentytwentyfive/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+	<script type="rocketlazyloadscript">
+				const lazyloadRunObserver = () => {
+					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
+					const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
+						entries.forEach( ( entry ) => {
+							if ( entry.isIntersecting ) {
+								let lazyloadBackground = entry.target;
+								if( lazyloadBackground ) {
+									lazyloadBackground.classList.add( 'e-lazyloaded' );
+								}
+								lazyloadBackgroundObserver.unobserve( entry.target );
+							}
+						});
+					}, { rootMargin: '200px 0px 200px 0px' } );
+					lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
+						lazyloadBackgroundObserver.observe( lazyloadBackground );
+					} );
+				};
+				const events = [
+					'DOMContentLoaded',
+					'elementor/lazyload/observe',
+				];
+				events.forEach( ( event ) => {
+					document.addEventListener( event, lazyloadRunObserver );
+				} );
+			</script>
+	<script type="rocketlazyloadscript" id="wp-block-template-skip-link-js-after">
+	( function() {
+		var skipLinkTarget = document.querySelector( 'main' ),
+			sibling,
+			skipLinkTargetID,
+			skipLink;
+
+		// Early exit if a skip-link target can't be located.
+		if ( ! skipLinkTarget ) {
+			return;
+		}
+
+		/*
+		 * Get the site wrapper.
+		 * The skip-link will be injected in the beginning of it.
+		 */
+		sibling = document.querySelector( '.wp-site-blocks' );
+
+		// Early exit if the root element was not found.
+		if ( ! sibling ) {
+			return;
+		}
+
+		// Get the skip-link target's ID, and generate one if it doesn't exist.
+		skipLinkTargetID = skipLinkTarget.id;
+		if ( ! skipLinkTargetID ) {
+			skipLinkTargetID = 'wp--skip-link--target';
+			skipLinkTarget.id = skipLinkTargetID;
+		}
+
+		// Create the skip link.
+		skipLink = document.createElement( 'a' );
+		skipLink.classList.add( 'skip-link', 'screen-reader-text' );
+		skipLink.id = 'wp-skip-link';
+		skipLink.href = '#' + skipLinkTargetID;
+		skipLink.innerText = 'Pular para o conteúdo';
+
+		// Inject the skip link.
+		sibling.parentElement.insertBefore( skipLink, sibling );
+	}() );
+	
+//# sourceURL=wp-block-template-skip-link-js-after
+</script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/webpack.runtime.min.js"
+		id="elementor-webpack-runtime-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/frontend-modules.min.js"
+		id="elementor-frontend-modules-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/core.min.js" id="jquery-ui-core-js"></script>
+	<script type="rocketlazyloadscript" id="elementor-frontend-js-before">
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Compartilhar no Facebook","shareOnTwitter":"Compartilhar no Twitter","pinIt":"Fixar","download":"Baixar","downloadImage":"Baixar imagem","fullscreen":"Tela cheia","zoom":"Zoom","share":"Compartilhar","playVideo":"Reproduzir v\u00eddeo","previous":"Anterior","next":"Pr\u00f3ximo","close":"Fechar","a11yCarouselPrevSlideMessage":"Slide anterior","a11yCarouselNextSlideMessage":"Pr\u00f3ximo slide","a11yCarouselFirstSlideMessage":"Este \u00e9 o primeiro slide","a11yCarouselLastSlideMessage":"Este \u00e9 o \u00faltimo slide","a11yCarouselPaginationBulletMessage":"Ir para o slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Dispositivos m\u00f3veis no modo retrato","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Dispositivos m\u00f3veis no modo paisagem","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet no modo retrato","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet no modo paisagem","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Notebook","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Tela ampla (widescreen)","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"hasCustomBreakpoints":false},"version":"3.34.1","is_static":false,"experimentalFeatures":{"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"theme_builder_v2":true,"nested-elements":true,"home_screen":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"cloud-library":true,"e_opt_in_v4_page":true,"e_interactions":true,"import-export-customization":true,"e_pro_variables":true},"urls":{"assets":"https:\/\/ourfacean.fun\/wp-content\/plugins\/elementor\/assets\/","ajaxurl":"https:\/\/ourfacean.fun\/wp-admin\/admin-ajax.php","uploadUrl":"https:\/\/ourfacean.fun\/wp-content\/uploads"},"nonces":{"floatingButtonsClickTracking":"ad2316c091"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":5522,"title":"moldes-vestidos%20%E2%80%93%20ourfacean.fun","excerpt":"","featuredImage":false}};
+//# sourceURL=elementor-frontend-js-before
+</script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/frontend.min_1.js" id="elementor-frontend-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/webpack-pro.runtime.min.js"
+		id="elementor-pro-webpack-runtime-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/hooks.min.js" id="wp-hooks-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/i18n.min.js" id="wp-i18n-js"></script>
+	<script type="rocketlazyloadscript" id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+//# sourceURL=wp-i18n-js-after
+</script>
+	<script type="rocketlazyloadscript" id="elementor-pro-frontend-js-before">
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/ourfacean.fun\/wp-admin\/admin-ajax.php","nonce":"4e85807925","urls":{"assets":"https:\/\/ourfacean.fun\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/ourfacean.fun\/wp-json\/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":false},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"pt_BR","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/ourfacean.fun\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+//# sourceURL=elementor-pro-frontend-js-before
+</script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/frontend.min.js" id="elementor-pro-frontend-js"></script>
+	<script type="rocketlazyloadscript" defer="defer" src="js/elements-handlers.min.js"
+		id="pro-elements-handlers-js"></script>
+	<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://ourfacean.fun/wp-includes/js/wp-emoji-release.min.js?ver=4572ee587de988a776a351fbdb28fd2c"}}
+</script>
+	<script type="rocketlazyloadscript" data-rocket-type="module">
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://ourfacean.fun/wp-includes/js/wp-emoji-loader.min.js
+</script>
+	<script>window.lazyLoadOptions = { elements_selector: "img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]", data_src: "lazy-src", data_srcset: "lazy-srcset", data_sizes: "lazy-sizes", class_loading: "lazyloading", class_loaded: "lazyloaded", threshold: 300, callback_loaded: function (element) { if (element.tagName === "IFRAME" && element.dataset.rocketLazyload == "fitvidscompatible") { if (element.classList.contains("lazyloaded")) { if (typeof window.jQuery != "undefined") { if (jQuery.fn.fitVids) { jQuery(element).parent().fitVids() } } } } } }; window.addEventListener('LazyLoad::Initialized', function (e) {
+			var lazyLoadInstance = e.detail.instance; if (window.MutationObserver) {
+				var observer = new MutationObserver(function (mutations) {
+					var image_count = 0; var iframe_count = 0; var rocketlazy_count = 0; mutations.forEach(function (mutation) {
+						for (var i = 0; i < mutation.addedNodes.length; i++) {
+							if (typeof mutation.addedNodes[i].getElementsByTagName !== 'function') { continue }
+							if (typeof mutation.addedNodes[i].getElementsByClassName !== 'function') { continue }
+							images = mutation.addedNodes[i].getElementsByTagName('img'); is_image = mutation.addedNodes[i].tagName == "IMG"; iframes = mutation.addedNodes[i].getElementsByTagName('iframe'); is_iframe = mutation.addedNodes[i].tagName == "IFRAME"; rocket_lazy = mutation.addedNodes[i].getElementsByClassName('rocket-lazyload'); image_count += images.length; iframe_count += iframes.length; rocketlazy_count += rocket_lazy.length; if (is_image) { image_count += 1 }
+							if (is_iframe) { iframe_count += 1 }
+						}
+					}); if (image_count > 0 || iframe_count > 0 || rocketlazy_count > 0) { lazyLoadInstance.update() }
+				}); var b = document.getElementsByTagName("body")[0]; var config = { childList: !0, subtree: !0 }; observer.observe(b, config)
+			}
+		}, !1)</script>
+	<script data-no-minify="1" async="" src="js/lazyload.min.js"></script>
+	<script>function lazyLoadThumb(e) { var t = '<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>', a = '<button class="play" aria-label="play Youtube video"></button>'; return t.replace("ID", e) + a } function lazyLoadYoutubeIframe() { var e = document.createElement("iframe"), t = "ID?autoplay=1"; t += 0 === this.parentNode.dataset.query.length ? '' : '&' + this.parentNode.dataset.query; e.setAttribute("src", t.replace("ID", this.parentNode.dataset.src)), e.setAttribute("frameborder", "0"), e.setAttribute("allowfullscreen", "1"), e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"), this.parentNode.parentNode.replaceChild(e, this.parentNode) } document.addEventListener("DOMContentLoaded", function () { var e, t, p, a = document.getElementsByClassName("rll-youtube-player"); for (t = 0; t < a.length; t++)e = document.createElement("div"), e.setAttribute("data-id", a[t].dataset.id), e.setAttribute("data-query", a[t].dataset.query), e.setAttribute("data-src", a[t].dataset.src), e.innerHTML = lazyLoadThumb(a[t].dataset.id), a[t].appendChild(e), p = e.querySelector('.play'), p.onclick = lazyLoadYoutubeIframe });</script>
+	<script>class RocketElementorAnimation { constructor() { this.deviceMode = document.createElement("span"), this.deviceMode.id = "elementor-device-mode", this.deviceMode.setAttribute("class", "elementor-screen-only"), document.body.appendChild(this.deviceMode) } _detectAnimations() { let t = getComputedStyle(this.deviceMode, ":after").content.replace(/"/g, ""); this.animationSettingKeys = this._listAnimationSettingsKeys(t), document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t => { const e = t.getBoundingClientRect(); if (e.bottom >= 0 && e.top <= window.innerHeight) try { this._animateElement(t) } catch (t) { } }) } _animateElement(t) { const e = JSON.parse(t.dataset.settings), i = e._animation_delay || e.animation_delay || 0, n = e[this.animationSettingKeys.find(t => e[t])]; if ("none" === n) return void t.classList.remove("elementor-invisible"); t.classList.remove(n), this.currentAnimation && t.classList.remove(this.currentAnimation), this.currentAnimation = n; let s = setTimeout(() => { t.classList.remove("elementor-invisible"), t.classList.add("animated", n), this._removeAnimationSettings(t, e) }, i); window.addEventListener("rocket-startLoading", function () { clearTimeout(s) }) } _listAnimationSettingsKeys(t = "mobile") { const e = [""]; switch (t) { case "mobile": e.unshift("_mobile"); case "tablet": e.unshift("_tablet"); case "desktop": e.unshift("_desktop") }const i = []; return ["animation", "_animation"].forEach(t => { e.forEach(e => { i.push(t + e) }) }), i } _removeAnimationSettings(t, e) { this._listAnimationSettingsKeys().forEach(t => delete e[t]), t.dataset.settings = JSON.stringify(e) } static run() { const t = new RocketElementorAnimation; requestAnimationFrame(t._detectAnimations.bind(t)) } } document.addEventListener("DOMContentLoaded", RocketElementorAnimation.run);</script>
+
+
+	<div class="upgrade-modal-overlay" id="upgradeModal">
+		<div class="upgrade-modal">
+			<div class="upgrade-header">DESCONTO ESPECIAL LIBERADO!</div>
+			<div class="upgrade-subhead">Espere! Temos uma Oferta Especial de Upgrade de Plano!</div>
+			<div class="upgrade-title">PLATAFORMA COMPLETA</div>
+
+			<div class="upgrade-price-old">PREÇO NORMAL R$13,99</div>
+			<div class="upgrade-price-new">Preço Promocional Nessa Página: R$11,47</div>
+
+			<ul class="upgrade-features">
+				<li>+90 Moldes para vestidos curtos, midi, longos, sociais, casuais, etc...</li>
+				<li>Video aula de como Imprimir os Moldes</li>
+				<li>Moldes de Saia Jeans, Social, Evasê</li>
+				<li>Moldes Vestidos Básico</li>
+				<li>Moldes Vestido Alcinha</li>
+				<li>Moldes Vestido em Malha</li>
+				<li>Moldes Vestido Cruzado</li>
+				<li>Moldes Vestido Mãe e Filha</li>
+				<li>Moldes Vestido Trapézio</li>
+				<li>Moldes Vestido Plus Size</li>
+				<li>E muitos outros</li>
+				<li>Área de Membros Premium</li>
+				<li>7 Dias de Garantia</li>
+				<li>Acesso vitalício</li>
+			</ul>
+
+			<p style="color: red; font-size: 0.8em; margin-bottom: 15px;">Esta promoção vai acabar a qualquer momento!
+			</p>
+
+			<button class="btn-upgrade" onclick="window.location.href='#upgrade'">SIM! QUERO FAZER O UPGRADE!</button>
+			<button class="btn-basic" onclick="window.location.href='https://ourfacean.fun/upgrade-vestidos-2'">QUERO A
+				OFERTA BÁSICA!</button>
+		</div>
+	</div>
+	<script>
+		function openUpgradePopup(e) {
+			if (e) e.preventDefault();
+			document.getElementById('upgradeModal').style.display = 'flex';
+		}
+	</script>
+</body>
+
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1768499844 -->
