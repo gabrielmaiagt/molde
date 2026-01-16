@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 
 // Firebase Admin Setup
 const admin = require('firebase-admin');
