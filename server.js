@@ -4,6 +4,29 @@ const path = require('path');
 
 const PORT = 9000;
 
+// Firebase Admin Setup
+const admin = require('firebase-admin');
+
+try {
+    let serviceAccount;
+    try {
+        serviceAccount = require('./service-account.json');
+    } catch (e) {
+        console.log('Local service-account.json not found. Using default environment credentials.');
+    }
+
+    if (serviceAccount) {
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+        });
+    } else {
+        admin.initializeApp();
+    }
+    console.log('Firebase Admin Initialized successfully.');
+} catch (error) {
+    console.error('Firebase Admin Initialization Error:', error);
+}
+
 const MIME_TYPES = {
     '.html': 'text/html',
     '.css': 'text/css',
@@ -21,7 +44,7 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
     console.log(`Request: ${req.url}`);
-    
+
     let filePath = '.' + req.url;
     if (filePath === './') {
         filePath = './index.html';
@@ -32,12 +55,12 @@ const server = http.createServer((req, res) => {
 
     fs.readFile(filePath, (error, content) => {
         if (error) {
-            if(error.code == 'ENOENT'){
+            if (error.code == 'ENOENT') {
                 res.writeHead(404);
                 res.end('404 Not Found');
             } else {
                 res.writeHead(500);
-                res.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+                res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
             }
         } else {
             res.writeHead(200, { 'Content-Type': contentType });
